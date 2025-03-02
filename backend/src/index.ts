@@ -33,7 +33,7 @@ const wss = new WebSocketServer({ port: 8000 });
 //another 
 wss.on("connection", (socket) => {
     socket.on("message", (e) => {
-        if(typeof e.toString === "string") {
+        if(typeof e.toString() === "string") {
             socket.send(e.toString())
         }
     })
