@@ -1,0 +1,1 @@
+WebSockets - WebSockets provide a way to establish a persistent, full-duplex communication channel over a single TCP connection betweeen the client (typically a web browser) and the server.

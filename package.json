@@ -1,0 +1,19 @@
+{
+  "name": "week15",
+  "version": "1.0.0",
+  "description": "WebSockets - WebSockets provide a way to establish a persistent, full-duplex communication channel over a single TCP connection betweeen the client (typically a web browser) and the server.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -b && node ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/websocket": "^1.0.10",
+    "@types/ws": "^8.5.14",
+    "websocket": "^1.0.35",
+    "ws": "^8.18.1"
+  }
+}
