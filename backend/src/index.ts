@@ -41,23 +41,59 @@
 
 
 //Creating a broadcasting chat app
+// import { WebSocketServer, WebSocket } from "ws";
+
+// const wss = new WebSocketServer({ port: 8000 });
+
+// let allSockets: WebSocket[] = [];
+
+// wss.on("connection", function(socket) {
+//     allSockets.push(socket);
+
+//     socket.on("message", (message) => {
+//         console.log("Message received: " + message.toString())
+//         // socket.send(message.toString() + ": sent from server")
+//         allSockets.forEach((ind) => {
+//             ind.send(message.toString())
+//         })
+//     })
+
+//     socket.on("disconnect", () => {
+//         allSockets.filter((ind) => ind != socket);
+//     })
+// })
+
+
 import { WebSocketServer, WebSocket } from "ws";
 
-const wss = new WebSocketServer({ port: 8000 });
+const wss = new WebSocketServer({ port: 8000 })
 
-let userCount = 0;
-let allSockets: WebSocket[] = [];
+interface User{
+    socket: WebSocket, 
+    room: string
+}
 
-wss.on("connection", function(socket) {
-    allSockets.push(socket);
-    console.log("user connected #" + userCount)
-    userCount++;
+let allSockets: User[] = [];
 
-    socket.on("message", (message) => {
-        console.log("Message received: " + message.toString())
-        // socket.send(message.toString() + ": sent from server")
-        allSockets.forEach((ind) => {
-            ind.send(message.toString())
+wss.on("connection", (socket) => {
+  socket.on("message", (message) => {
+    const parsedMessage = JSON.parse(message.toString());
+    if(parsedMessage.type === "join") {
+        allSockets.push({
+            socket, 
+            room: parsedMessage.payload.roomId
         })
-    })
+    }
+
+    if(parsedMessage.type === "chat") {
+        const currentUser = allSockets.find((x) => x.socket == socket)
+        const currentUserRoom = currentUser?.room
+
+        allSockets.forEach((ind) => {
+            if(ind.room == currentUserRoom) {
+                ind.socket.send(parsedMessage.payload.message)
+            }}
+        )
+    }
+  })  
 })
