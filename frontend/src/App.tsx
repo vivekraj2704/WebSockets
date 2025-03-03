@@ -1,30 +1,40 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 //better way - create a useSocket hook
 function App() {
-  const [socket, setSocket] = useState();
+  // const [socket, setSocket] = useState<WebSocket>();
   // const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState<string>("");
+  const [allMessage, setAllMessage] = useState<{msg: string}[]>([]);
+  const socketRef = useRef<WebSocket>(null);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:8000")
-    setSocket(ws);
+    
+    // setSocket(ws);
+    socketRef.current = ws
 
     ws.onmessage = (ev) => {
-      alert(ev.data);
+      setAllMessage((prevMessage) => [...prevMessage, {msg: ev.data}]);
     }
   }, [])
 
   function sendMessage() {
-    if(!socket) {
-      return;
+    if(socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.send(input)
+      setInput("");
     }
-    //@ts-ignore
-    socket.send(input)
   }
   return (
     <div>
+      <div>
+        {allMessage.map((ind) => {
+          return <div>
+            {ind.msg}
+          </div>
+        })}
+      </div>
       <input type="text" placeholder='enter your text' value={input} onChange={(e)=> {
         console.log(e.target.value)
         setInput(e.target.value)
