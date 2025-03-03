@@ -84,8 +84,16 @@
 
 export default function App() {
   return(
-    <div className="bg-gray-700 p-4 border">
-      
+    <div className="w-screen h-screen bg-gray-800 p-4 border flex justify-center items-center">
+      <div className="w-[60vh] h-[80vh] bg-gray-500 rounded-2xl">
+        <div className="bg-gray-400 h-[60vh] w-[55vh] ml-[2.5vh] mt-[2.5vh] rounded-xl">
+          {/* messages will appear here */}
+        </div>
+        <div className="flex justify-center mt-[3vh] w-[55vh] ml-[2.5vh] gap-3">
+          <input type="text" className="bg-white w-[40vh] h-[4vh] rounded-2xl"/>
+          <button className="bg-black text-white rounded-2xl w-[8vh]">Send</button>
+        </div>
+      </div>
     </div>
   )
 }
