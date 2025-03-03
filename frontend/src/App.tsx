@@ -86,6 +86,10 @@ export default function App() {
   return(
     <div className="w-screen h-screen bg-gray-800 p-4 border flex justify-center items-center">
       <div className="w-[60vh] h-[80vh] bg-gray-500 rounded-2xl">
+        <div className="flex gap-2 items-center justify-center mt-[2vh]">
+          <div>Room:</div>
+          <div></div>
+        </div>
         <div className="bg-gray-400 h-[60vh] w-[55vh] ml-[2.5vh] mt-[2.5vh] rounded-xl">
           {/* messages will appear here */}
         </div>
