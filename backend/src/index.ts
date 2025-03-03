@@ -41,11 +41,23 @@
 
 
 //Creating a broadcasting chat app
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 
-const wss = new WebSocketServer({ port: 8000 })
+const wss = new WebSocketServer({ port: 8000 });
+
 let userCount = 0;
+let allSockets: WebSocket[] = [];
+
 wss.on("connection", function(socket) {
+    allSockets.push(socket);
     console.log("user connected #" + userCount)
     userCount++;
+
+    socket.on("message", (message) => {
+        console.log("Message received: " + message.toString())
+        // socket.send(message.toString() + ": sent from server")
+        allSockets.forEach((ind) => {
+            ind.send(message.toString())
+        })
+    })
 })
