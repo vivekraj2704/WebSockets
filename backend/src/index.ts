@@ -1,6 +1,6 @@
-import { WebSocketServer } from 'ws';
+// import { WebSocketServer } from 'ws';
 
-const wss = new WebSocketServer({ port: 8000 });
+// const wss = new WebSocketServer({ port: 8000 });
 
 //event handler
 // wss.on("connection", function(socket) {
@@ -31,10 +31,21 @@ const wss = new WebSocketServer({ port: 8000 });
 
 
 //another 
-wss.on("connection", (socket) => {
-    socket.on("message", (e) => {
-        if(typeof e.toString() === "string") {
-            socket.send(e.toString())
-        }
-    })
+// wss.on("connection", (socket) => {
+//     socket.on("message", (e) => {
+//         if(typeof e.toString() === "string") {
+//             socket.send(e.toString())
+//         }
+//     })
+// })
+
+
+//Creating a broadcasting chat app
+import { WebSocketServer } from "ws";
+
+const wss = new WebSocketServer({ port: 8000 })
+let userCount = 0;
+wss.on("connection", function(socket) {
+    console.log("user connected #" + userCount)
+    userCount++;
 })
